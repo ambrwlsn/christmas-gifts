@@ -14,6 +14,11 @@ Usage
 Setup
 ---
 
+- Clone the repository to a folder on your local machine.
+- cd into folder
+- run npm-init
 
 Compile
 ---
+
+- run gulp serve 
