@@ -7,22 +7,26 @@
   </head>
   <body>
       <h1>Christmas Gifts</h1>
-      <form class="gift-form" action="index.html" method="post">
+      
+      <form class="gift-form" name="giftform" action="">
           <h2>Gift Submit Form</h2>
-          Title of Gift
-          <input type="text" name="title" value="">
-          Recipient of Gift
-          <input type="text" name="recipient" value="">
-          Link to Gift Picture
-          <input type="text" name="link" value="">
-          Price of Gift
-          <input type="text" name="price" value="">
-          <button type="submit" name="button" method="post">Submit</button>
+          <label>Title of Gift</label>
+          <input type="text" name="title" value="" placeholder="Enter a title" id="title">
+          <label>Recipient of Gift</label>
+          <input type="text" name="recipient" value="" placeholder="Enter a recipient" id="recipient">
+          <label>Link to Gift Picture</label>
+          <input type="text" name="link" value="" placeholder="Enter link to picture" id="link">
+          <label>Price of Gift</label>
+          <input type="text" name="price" value="" placeholder="Enter price" id="price">
+          <button type="button" value="Submit" onClick="B()">Submit</button>
       </form>
+
 
       <div class="list-box">
           <h2>Gift List</h2>
+          <div id="display"></div>
       </div>
 
   </body>
+  <script src="/js/script.js"></script>
 </html>

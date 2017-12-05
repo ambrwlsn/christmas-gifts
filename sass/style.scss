@@ -2,6 +2,11 @@ h1 {
   text-align: center;
 }
 
+.list-title {
+  font-size: .8em;
+  float: left;
+}
+
 input {
   line-height: 2em;
   margin-bottom:1em;
@@ -22,6 +27,7 @@ input {
   margin: 2em;
   padding: 2em;
   display: flex;
+  flex-direction: column;
   width: 20vw;
   height: 50vh;
 }
