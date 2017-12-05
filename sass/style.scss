@@ -1,0 +1,14 @@
+input {
+  line-height: 2em;
+  margin-bottom:5px;
+}
+
+.gift-form {
+  border: 1px solid black;
+  margin: 2em;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  width: 20vw;
+  height: 50vh;
+}

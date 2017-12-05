@@ -3,14 +3,14 @@ const sass = require("gulp-sass");
 
 const browserSync = require("browser-sync").create();
 
-gulp.task("serve", ["js", "templates"], function() {
+gulp.task("serve", ["js", "templates", "sass"], function() {
   browserSync.init({
     server: {
       baseDir: "./public"
     }
   });
 
-  // gulp.watch("./src/sass/**/*.scss", ["sass"]);
+  gulp.watch("./sass/**/*.scss", ["sass"]);
   gulp.watch("./js/**/*.js", ["js"]);
   // gulp.watch("./src/img/**", ["images"]);
   // gulp.watch("./src/fonts/**", ["fonts"]);
@@ -18,13 +18,13 @@ gulp.task("serve", ["js", "templates"], function() {
   gulp.watch("./templates/index.html", ["templates"]);
 });
 
-// gulp.task("sass", function() {
-//   return gulp
-//     .src("./src/sass/**/*.scss")
-//     .pipe(sass().on("error", sass.logError))
-//     .pipe(gulp.dest("./public/css"))
-//     .pipe(browserSync.stream());
-// });
+gulp.task("sass", function() {
+  return gulp
+    .src("./sass/**/*.scss")
+    .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest("./public/css"))
+    .pipe(browserSync.stream());
+});
 
 gulp.task("js", function() {
   return gulp
