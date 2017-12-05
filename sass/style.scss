@@ -1,6 +1,10 @@
+h1 {
+  text-align: center;
+}
+
 input {
   line-height: 2em;
-  margin-bottom:5px;
+  margin-bottom:1em;
 }
 
 .gift-form {
@@ -9,6 +13,15 @@ input {
   padding: 2em;
   display: flex;
   flex-direction: column;
+  width: 20vw;
+  height: 50vh;
+}
+
+.list-box {
+  border: 1px solid black;
+  margin: 2em;
+  padding: 2em;
+  display: flex;
   width: 20vw;
   height: 50vh;
 }
