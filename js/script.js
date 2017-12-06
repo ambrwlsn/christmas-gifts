@@ -1,8 +1,14 @@
 // Creates a new list item when clicking on the "Add" button
 function showNewGift(){
-    var li = document.createElement("li");
+    // var li = document.createElement("li");
 
-// var inputArray = [title, recipient, link, price]; ~ haven't figured out how to tidy the code by utilising arrays yet
+    var li = document.createElement("li");
+    var att = document.createAttribute("contenteditable");
+    att.value = "true";
+    li.setAttributeNode(att);
+
+//Array containing each input
+    var inputArray = [title, recipient, link, price];
 
 // Places each user-inputted value into a variable
     var titleValue = document.getElementById("title").value;
@@ -21,12 +27,21 @@ function showNewGift(){
     } else {
       document.getElementById("display").appendChild(li);
     }
+// Empties the input fields once submit button is pressed
     // document.getElementById("titleValue").value = "";
 
 // Appends 'x' unicode character as a delete button to the DOM
-    var span = document.createElement("SPAN");
+    var span = document.createElement("button");
     var txt = document.createTextNode("\u00D7");
     span.className = "close";
+    span.appendChild(txt);
+    li.appendChild(span);
+
+// Appends edit button to the DOM
+    var span = document.createElement("button");
+// ~ How can I style the edit text?
+    var txt = document.createTextNode(" edit");
+    span.className = "edit";
     span.appendChild(txt);
     li.appendChild(span);
 
@@ -34,9 +49,7 @@ function showNewGift(){
 var close = document.getElementsByClassName("close");
     for (i = 0; i < close.length; i++) {
       close[i].onclick = function() {
-        // var div = this.parentElement;
         this.parentNode.parentNode.removeChild(this.parentNode);
-        // div.style.display = "none";
       }
     }
   }

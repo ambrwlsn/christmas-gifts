@@ -25,4 +25,16 @@ input {
   display: flex;
   flex-direction: column;
   width: 20vw;
-  height: 50vh; }
+  height: 50vh;
+  overflow: scroll; }
+  .list-box ul {
+    padding: 0; }
+  .list-box li {
+    list-style: none;
+    margin: 1rem 0; }
+  .list-box button {
+    padding: .3rem;
+    background: #ccc;
+    border: 1px solid black;
+    margin-right: .3rem;
+    font-weight: bold; }
