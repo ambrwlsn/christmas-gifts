@@ -29,6 +29,8 @@ function showNewGift(){
     }
 // Empties the input fields once submit button is pressed
     // document.getElementById("titleValue").value = "";
+    var form = document.getElementById("gift_form");
+    form.reset();
 
 // Appends 'x' unicode character as a delete button to the DOM
     var span = document.createElement("button");
