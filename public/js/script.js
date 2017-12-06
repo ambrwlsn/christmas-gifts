@@ -16,7 +16,7 @@ function showNewGift(){
     li.appendChild(showInput);
 
 // Creates alert box if either of the title or recipient inputs are empty
-    if (titleValue === '' | recValue === '') {
+    if (titleValue.trim() === '' | recValue.trim() === '') {
       alert("You must add a gift and recipient!");
     } else {
       document.getElementById("display").appendChild(li);
@@ -30,21 +30,13 @@ function showNewGift(){
     span.appendChild(txt);
     li.appendChild(span);
 
+// Click on a close button to not only hide but delete current list item
+var close = document.getElementsByClassName("close");
     for (i = 0; i < close.length; i++) {
       close[i].onclick = function() {
-        var div = this.parentElement;
-        div.style.display = "none";
+        // var div = this.parentElement;
+        this.parentNode.parentNode.removeChild(this.parentNode);
+        // div.style.display = "none";
       }
     }
   }
-
-// Click on a close button to hide the current list item
-// !But this doesn't delete the generated <li></li> in the DOM! ~ how can I do this? do I even need to do this, or is it ok to leave those <li> there?
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
