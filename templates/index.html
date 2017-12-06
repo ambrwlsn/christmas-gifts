@@ -8,7 +8,7 @@
   <body>
       <h1>Christmas Gifts</h1>
 
-      <form class="gift-form" name="giftform" action="" id="gift_form">
+      <!-- <form class="gift-form" name="giftform" action="" id="gift_form">
           <h2>Gift Submit Form</h2>
           <label>Title of Gift</label>
           <input type="text" name="title" value="" placeholder="Enter a title" id="title">
@@ -18,15 +18,25 @@
           <input type="text" name="link" value="" placeholder="Enter link to picture" id="link">
           <label>Price of Gift</label>
           <input type="text" name="price" value="" placeholder="Enter price" id="price">
-          <button type="button" value="Submit" onClick="showNewGift()">Submit</button>
-      </form>
+          <button type="button" value="Submit" onClick="showNewGift()">Add</button>
+      </form> -->
 
+      <form class="gift-form" name="gift_form" action="#" id="gift_form">
+                <h2>Gift Submit Form</h2>
+                <label for="title">Title of Gift</label>
+                <input type="text" name="title" value="" placeholder="Enter a title" id="title">
+                <label for="recipient">Recipient of Gift</label>
+                <input type="text" name="recipient" value="" placeholder="Enter a recipient" id="recipient">
+                <label for="link">Link to Gift Picture</label>
+                <input type="text" name="link" value="" placeholder="Enter link to picture" id="link">
+                <label for="price">Price of Gift</label>
+                <input type="text" name="price" value="" placeholder="Enter price" id="price">
+                <input type="submit" value="Submit">
+            </form>
 
       <div class="list-box">
-          <h2>Gift List</h2>
-          <ul id="display">
-          </ul>
-      </div>
+            <h2>Gift List</h2>
+        </div>
 
   </body>
   <script src="/js/script.js"></script>
