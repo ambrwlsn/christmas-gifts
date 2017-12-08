@@ -12,17 +12,39 @@ function showNewGift(event) {
 
 function allowGiftEdit() {
    // get the last gift item in the list
-    var gifts = document.getElementsByClassName("gift_item");
+    var gifts = document.getElementsByClassName("edit_gift");
     var lastItem = gifts.length - 1;
-
     // attach a click event to the  button
     // which changes it into editing mode
     gifts[lastItem].addEventListener("click", giftEditEvent, false);
 }
 
-function giftEditEvent(event) {
-  event.preventDefault();
-  console.log('the edit function works');
+function giftEditEvent(giftEvent) {
+    giftEvent.preventDefault();
+
+    var edited_gift = editedGiftContents();
+    var giftItemForm = giftEvent.target.parentNode;
+    var inputWrapper = giftItemForm.getElementsByClassName("gift_item_data");
+    var editedInput = editedInputHTML(edited_gift);
+
+    for (var i = 0, length = inputWrapper.length; i < length; i++) {
+    inputWrapper[i].insertAdjacentHTML('beforeend', editedInput);
+  }
+}
+
+function editedGiftContents() {
+    return {
+        title: document.getElementsByClassName("title_span").value,
+        recipient: document.getElementsByClassName("recipient_span").value,
+        link: document.getElementsByClassName("link_span").value,
+        price: document.getElementsByClassName("price_span").value,
+    };
+}
+
+function editedInputHTML(edited_gift){
+  const markup = `
+  <input type="text" value="${edited_gift.title}" />`;
+  return markup;
 }
 
 function insertGiftDisplayMarkup(){
@@ -48,39 +70,26 @@ function generateGiftDisplayMarkup(gift) {
     const markup = `
           <form class="gift_item">
 
-             <div>
+             <div class="gift_item_data">
                <label>Title: </label>
-               <span style="float: right;">${gift.title}</span><br>
+               <span class="title_span" style="float: right;">${gift.title}</span><br>
              </div>
-             <div>
+             <div class="gift_item_data">
                <label>Recipient: </label>
-               <span style="float: right;">${gift.recipient}</span><br>
+               <span class="recipient_span" style="float: right;">${gift.recipient}</span><br>
              </div>
-             <div>
+             <div class="gift_item_data">
                <label>Link: </label>
-               <span style="float: right;">${gift.link}</span><br>
+               <span class="link_span" style="float: right;">${gift.link}</span><br>
              </div>
-             <div>
+             <div class="gift_item_data">
                <label>Price: </label>
-               <span style="float: right;">${gift.price}</span><br>
+               <span class="price_span" style="float: right;">${gift.price}</span><br>
              </div>
-             <button name="button">Edit</button>
+             <button name="button" class="edit_gift">Edit</button>
          </form>`;
     return markup;
 }
-
-//When the user clicks the edit button, I want each span with user input (in a given gift block) to transform into an input.
-//I want the user to be able to edit the input
-//I want the user to be able to click a save button to save their altered input
-
-// function editInput(){
-//     var A = document.getElementsByClassName("gift_item");
-//     var generatedInputField = document.createElement("input");
-//     var txt = document.createTextNode(" edit");
-//     generatedInputField.className = "edit";
-//     span.appendChild(txt);
-//     li.appendChild(span);
-// }
 
 // This function is placed in the submit function (showNewGift) to clear the user input fields once submit has been fired
 function clearUserInputFields() {
@@ -103,20 +112,24 @@ function emptyInputAlert(){
     }
 }
 
-function deleteButton(){ // Appends 'x' unicode character as a delete button to the DOM
-    var span = document.createElement("button");
-    var txt = document.createTextNode("\u00D7");
-    span.className = "close";
-    span.appendChild(txt);
-    li.appendChild(span);
-    // Click on a close button to not only hide but delete current list item
-    var close = document.getElementsByClassName("close");
-        for (i = 0; i < close.length; i++) {
-          close[i].onclick = function() {
-            this.parentNode.parentNode.removeChild(this.parentNode);
-        }
-    }
-}
+//When the user clicks the edit button, I want each span with user input (in a given gift block) to transform into an input.
+//I want the user to be able to edit the input
+//I want the user to be able to click a save button to save their altered input
+
+// function deleteButton(){ // Appends 'x' unicode character as a delete button to the DOM
+//     var span = document.createElement("button");
+//     var txt = document.createTextNode("\u00D7");
+//     span.className = "close";
+//     span.appendChild(txt);
+//     li.appendChild(span);
+//     // Click on a close button to not only hide but delete current list item
+//     var close = document.getElementsByClassName("close");
+//         for (i = 0; i < close.length; i++) {
+//           close[i].onclick = function() {
+//             this.parentNode.parentNode.removeChild(this.parentNode);
+//         }
+//     }
+// }
 
 // function createButtonElement(li){
 //     var li = document.createElement("li");
