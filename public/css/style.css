@@ -9,6 +9,11 @@ input {
   line-height: 2em;
   margin-bottom: 1em; }
 
+.box-wrap {
+    display: flex;
+    flex-direction: row;
+  }
+
 .gift-form {
   border: 1px solid black;
   margin: 2em;
@@ -27,3 +32,6 @@ input {
   width: 20vw;
   height: 50vh;
   overflow: scroll; }
+
+.display {
+  position: relative; }
