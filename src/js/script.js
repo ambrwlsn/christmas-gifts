@@ -15,7 +15,7 @@ function emptyInputAlert(){
     if ($titleValue.trim() === '' | $recValue.trim() === '') {
       alert("You must add a gift and recipient!");
     } else {
-      false
+      false 
     } 
  }
 

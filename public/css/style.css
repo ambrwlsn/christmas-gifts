@@ -10,9 +10,8 @@ input {
   margin-bottom: 1em; }
 
 .box-wrap {
-    display: flex;
-    flex-direction: row;
-  }
+  display: flex;
+  flex-direction: row; }
 
 .gift-form {
   border: 1px solid black;
@@ -33,5 +32,9 @@ input {
   height: 50vh;
   overflow: scroll; }
 
+.f {
+  float: right; }
+
 .display {
-  position: relative; }
+  position: relative;
+  float: left; }
