@@ -33,6 +33,6 @@ gulp.task("js", function() {
 gulp.task("templates", function() {
   return gulp
     .src("./src/templates/*.html")
-    .pipe(gulp.dest("./public/templates"))
+    .pipe(gulp.dest("./public/"))
     .pipe(browserSync.stream());
 });
