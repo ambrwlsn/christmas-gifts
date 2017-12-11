@@ -4,8 +4,8 @@ form.addEventListener("submit", addNewGiftToGiftList, false);
 function addNewGiftToGiftList(event) {
     event.preventDefault();
     emptyInputAlert();
-    checkNumber();
-    insertGiftDisplayMarkup();
+    // checkNumber();
+    insertGiftInstance();
     allowGiftEdit();
     clearUserInputFields();
 }
@@ -21,23 +21,23 @@ function emptyInputAlert(){
     } 
 }
 
-function checkNumber(){
-    var $priceValue = document.getElementById("price").value;
-    if ($priceValue != "" | isNaN($priceValue)) {
-        alert("Invalid price!");
-        return true;
-    }   else {
-        return false; 
-      } 
-}
+// function checkNumber(){
+//     var $priceValue = document.getElementById("price").value;
+//     if ($priceValue != "" | isNaN($priceValue)) {
+//         alert("Invalid price!");
+//         return true;
+//     }   else {
+//         return false; 
+//       } 
+// }
 
-function insertGiftDisplayMarkup(){
-    if(emptyInputAlert() | checkNumber()) {
+function insertGiftInstance(){
+    if(emptyInputAlert()){
         return false;
     } else {
         var $container_element = document.getElementById("gift_list_section");
         var new_gift = giftSubmitFormUserInput(); 
-        var gift_markup = generateGiftDisplayMarkup(new_gift);
+        var gift_markup = generateGiftInstance(new_gift); //the new_gift variable links to the function below!!!!!!
         $container_element.insertAdjacentHTML('beforeend', gift_markup);
      } 
 }
@@ -51,7 +51,7 @@ function giftSubmitFormUserInput() {
     };
 }
 
-function generateGiftDisplayMarkup(gift) {
+function generateGiftInstance(gift) {
     const $markup = `
           <form class="gift_item">
 
@@ -133,22 +133,30 @@ function clickSave(saveEvent) {
             for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
                 var $input = $inputs[j];
                 $input.style.display = "none";
-
                 var $spans = giftItemWrapper.getElementsByClassName('span');
                 for(var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
                     var $span = $spans[k];
                 
                 $span.style.display = "block";
                 $span.innerHTML = $input.value;
+
+                var $save_button = saveEvent.target;
+                $save_button.style.display = "none";   
+            
+               
                 
             }
-            var $save_button = saveEvent.target;
-            $save_button.style.display = "none";   
-
-            var $edit_button = document.getElementsByTagName("button").item(0);
-            $edit_button.style.display = "inline";
+           
         }   
+
+        var $edit_button = document.getElementsByTagName("button");
+            for (var l = 0, $inputsLength = $edit_button.length; l < $inputsLength; l++) {
+                var $buttons = $edit_button[l];
+                $buttons.style.display = "inline";
+        }
+        
     }
+ 
 }
 
 function allowSaveEdit() {
