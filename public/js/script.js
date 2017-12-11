@@ -4,6 +4,7 @@ form.addEventListener("submit", addNewGiftToGiftList, false);
 function addNewGiftToGiftList(event) {
     event.preventDefault();
     emptyInputAlert();
+    checkNumber();
     insertGiftDisplayMarkup();
     allowGiftEdit();
     clearUserInputFields();
@@ -17,7 +18,16 @@ function emptyInputAlert(){
     } else {
       false 
     } 
- }
+}
+
+function checkNumber(){
+    var $priceValue = document.getElementById("price").value;
+    if ($priceValue != "" | isNaN($priceValue)) {
+        alert("Invalid price!");
+    }   else {
+        false 
+      } 
+}
 
 function insertGiftDisplayMarkup(){
     var $container_element = document.getElementById("gift_list_section"); //targets gift list section (a div container in the HTML file)
