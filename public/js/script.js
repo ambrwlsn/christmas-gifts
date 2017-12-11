@@ -35,11 +35,10 @@ function insertGiftDisplayMarkup(){
     if(emptyInputAlert() | checkNumber()) {
         return false;
     } else {
-        var $container_element = document.getElementById("gift_list_section"); //targets gift list section (a div container in the HTML file)
-        var new_gift = giftSubmitFormUserInput(); //accesses user input in gift submit form and puts it in 'new_gift' variable
-        var gift_markup = generateGiftDisplayMarkup(new_gift); //inserts user input (using new_gift variable) into HTML template strings 
-        $container_element.insertAdjacentHTML('beforeend', gift_markup); 
-        //targets gift list section, runs insert adjacent HTML function & places the user + HTML template strings into the gift list section
+        var $container_element = document.getElementById("gift_list_section");
+        var new_gift = giftSubmitFormUserInput(); 
+        var gift_markup = generateGiftDisplayMarkup(new_gift);
+        $container_element.insertAdjacentHTML('beforeend', gift_markup);
      } 
 }
 
@@ -59,20 +58,24 @@ function generateGiftDisplayMarkup(gift) {
              <div class="gift_item_data">
                <label>Title: </label>
                <span class="span" style="float: right;">${gift.title}</span>
+               <input class="input" type="text" style="display:none" value="${gift.title}" />
              </div>
              <div class="gift_item_data">
                <label>Recipient: </label>
                <span class="span" style="float: right;">${gift.recipient}</span>
+               <input class="input" type="text" style="display:none" value="${gift.recipient}" />
              </div>
              <div class="gift_item_data">
                <label>Link: </label>
                <span class="span" style="float: right;">${gift.link}</span>
+               <input class="input" type="text"style="display:none" value="${gift.link}" />
              </div>
              <div class="gift_item_data">
                <label>Price: </label>
                <span class="span" style="float: right;">${gift.price}</span>
+               <input class="input" type="text" style="display:none" value="${gift.price}" />
              </div>
-             <button name="button" class="edit_gift">Edit</button>
+             <button name="button" class="edit_button">Edit</button>
          </form>`;
     return $markup;
 }
@@ -86,42 +89,39 @@ function clearUserInputFields() {
 
 function clickEdit(giftEvent) {
     giftEvent.preventDefault();
-    var $gift_item_form = giftEvent.target.parentNode; //this targets the parent node of the target (i.e. the button), and this is the form element
-    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data"); //this targets the 4 div elements with class name of "gift_item_data" inside the form element that was targeted using $gift_item_form
-    
-    for (var i = 0, length = $input_wrapper.length; i < length; i++) //this for loop targets each of the 4 div elements with class name of "gift_item_data"
-        {
-            var giftItemWrapper = $input_wrapper[i]; //this variable contains each of the 4 div elements with class name of "gift_item_data" as separate items
-            var $inputs = giftItemWrapper.getElementsByClassName('span'); //this variable gets the 1 span element of each of the 4 separate div items with class name of "gift_item_data"
-            for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++)//this for loop contains each of the 4 span elements within the div with the class name of "gift_item_data" as separate items
-            
-            {
-                var $span = $inputs[j];
-                var $edit_button = giftEvent.target;
-                var editedInput = editedInputHTML($span.innerHTML);
-                //this variable works with the editedInputHTML function to inject the markdown template containing the innerHTML value of each of the 4 spans
-                $input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
-                //this function places the markdown (with corresponding inputs[j].innerHTML value) at the end of each of the 4 div elements with a class name of "gift_item_data" 
-                
-                $span.style.display = "none";
-                $edit_button.style.display = "none";
-                
-            }  
-            
-    }   
-        var save_and_cancel_buttons = generateSaveAndCancelButtonMarkup();
-        $gift_item_form.insertAdjacentHTML('beforeend', save_and_cancel_buttons); 
-        allowSaveEdit(); 
-
+    var $gift_item_form = giftEvent.target.parentNode;
+    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
+    for (var i = 0, length = $input_wrapper.length; i < length; i++)
+        {var giftItemWrapper = $input_wrapper[i];
+        var $inputs = giftItemWrapper.getElementsByClassName('span');
+            for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++)
+                {var $span = $inputs[j];
+                 var $edit_button = giftEvent.target;
+                 $span.style.display = "none";
+                 $edit_button.style.display = "none";
+                }  
+                var $inputs = giftItemWrapper.getElementsByClassName('input');
+                for(var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) 
+                    {var $input = $inputs[k];
+                     $input.style.display = "block";   
+                    }
+        }   
+                var save_button = generateSaveButtonMarkup();
+                $gift_item_form.insertAdjacentHTML('beforeend', save_button); 
+                allowSaveEdit(); 
 }
 
-function generateSaveAndCancelButtonMarkup(){
+function allowGiftEdit() {
+    var $gifts = document.getElementsByClassName("edit_button");
+    var $lastItem = $gifts.length - 1;
+    $gifts[$lastItem].addEventListener("click", clickEdit, false);
+} 
+
+function generateSaveButtonMarkup(){
     const markup = `
-    <button name="button" class="save_button">Save</button>
-    <button name="button" class="cancel_button">Cancel</button>`;
+    <button name="button" class="save_button">Save</button>`;
     return markup;
 }
-
 
 function clickSave(saveEvent) {
     saveEvent.preventDefault();
@@ -129,11 +129,10 @@ function clickSave(saveEvent) {
     var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
     for (var i = 0, length = $input_wrapper.length; i < length; i++) {
         var giftItemWrapper = $input_wrapper[i];
-        // console.log(giftItemWrapper);
-        var $inputs = giftItemWrapper.getElementsByClassName('edit_input_here');
+        var $inputs = giftItemWrapper.getElementsByClassName('input');
             for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
                 var $input = $inputs[j];
-                // console.log($input);
+                $input.style.display = "none";
 
                 var $spans = giftItemWrapper.getElementsByClassName('span');
                 for(var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
@@ -141,11 +140,13 @@ function clickSave(saveEvent) {
                 
                 $span.style.display = "block";
                 $span.innerHTML = $input.value;
-                $input.style.display = "none";
                 
-                var $save_button = saveEvent.target;
-                $save_button.style.display = "none";      
             }
+            var $save_button = saveEvent.target;
+            $save_button.style.display = "none";   
+
+            var $edit_button = document.getElementsByTagName("button").item(0);
+            $edit_button.style.display = "inline";
         }   
     }
 }
@@ -156,25 +157,5 @@ function allowSaveEdit() {
     $gifts[$lastItem].addEventListener("click", clickSave, false);
 }
 
-// ***********************************************************************************
-// I am trying to get the clickSave function (above these comments) to (when clicked):
-// 1. Target the generated input elements
-// 2. Pull out the input elements' NEW values
-// 3. Un-hide or recreate span element
-// 4. Place NEW values into span element
-// 5. Hide/delete the input element
-// 6. Change the button back to the edit button ready to be clicked again 
-// ***********************************************************************************
 
-function allowGiftEdit() {
-    var $gifts = document.getElementsByClassName("edit_gift");
-    var $lastItem = $gifts.length - 1;
-    $gifts[$lastItem].addEventListener("click", clickEdit, false);
-}
-
-function editedInputHTML(value){
-  const markup = `
-  <input type="text" class="edit_input_here" value="${value}" />`;
-  return markup;
-}   
 
