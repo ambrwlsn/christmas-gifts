@@ -100,6 +100,9 @@ function clickEdit(giftEvent) {
                 //this variable works with the editedInputHTML function to inject the markdown template containing the innerHTML value of each of the 4 spans
                 $input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
                 //this function places the markdown (with corresponding inputs[j].innerHTML value) at the end of each of the 4 div elements with a class name of "gift_item_data" 
+                var $hide_span = $inputs[j];
+                $hide_span.style.display = "none";
+                $gift_item_form.button.style.display = "none";
             }   
     }
 }
