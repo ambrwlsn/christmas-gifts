@@ -86,23 +86,22 @@ function clearUserInputFields() {
 
 function clickEdit(giftEvent) {
     giftEvent.preventDefault();
-
-    var edited_gift = giftSubmitFormUserInput();
-    var $gift_item_form = giftEvent.target.parentNode;
-    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
-    console.log($input_wrapper);
-    //console.log($input_wrapper.hasChildNodes());
-    //var $form_spans = $input_wrapper.childNodes;
+    var $gift_item_form = giftEvent.target.parentNode; //this targets the parent node of the target (i.e. the button), and this is the form element
+    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data"); //this targets the 4 div elements with class name of "gift_item_data" inside the form element that was targeted using $gift_item_form
     
-
-    // $gift_item_form.insertAdjacentHTML('beforeend', editedInput);
-
-    for (var i = 0, length = $input_wrapper.length; i < length; i++) {
-            var editedInput = editedInputHTML(edited_gift);
-            // this.removeChild(this.getElementsByClassName('span'));
-            //$input_wrapper[i].removeChild($form_spans);
-            $input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
-  }
+    for (var i = 0, length = $input_wrapper.length; i < length; i++) //this for loop targets each of the 4 div elements with class name of "gift_item_data"
+        {
+            var giftItemWrapper = $input_wrapper[i]; //this variable contains each of the 4 div elements with class name of "gift_item_data" as separate items
+            var $inputs = giftItemWrapper.getElementsByClassName('span'); //this variable gets the 1 span element of each of the 4 separate div items with class name of "gift_item_data"
+            for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++)//this for loop contains each of the 4 span elements within the div with the class name of "gift_item_data" as separate items
+            
+            {
+                var editedInput = editedInputHTML($inputs[j].innerHTML);
+                //this variable works with the editedInputHTML function to inject the markdown template containing the innerHTML value of each of the 4 spans
+                $input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
+                //this function places the markdown (with corresponding inputs[j].innerHTML value) at the end of each of the 4 div elements with a class name of "gift_item_data" 
+            }   
+    }
 }
 
 function allowGiftEdit() {
@@ -120,23 +119,8 @@ function editedGiftContents() {
     };
 }
 
-function editedInputHTML(edited_gift){
+function editedInputHTML(value){
   const markup = `
-  <input type="text" class="edit_input_here" value="${edited_gift.title}" />`;
+  <input type="text" class="edit_input_here" value="${value}" />`;
   return markup;
-} // I can't figure out what to write in the value attribute here. What is currently there does not work
-
-                            //***!!! START PSUEDO CODE !!!***/
-
-// I want the user to click the edit button and each of 4 fields becomes an input field
-// I want the edit button to turn to a save button right away, so that the edit function can't run anymore (and create extra input fields)
-
-// I want the user to be able to click the save button to store the new input value, 
-
-// I want a cancel button to be available in case the user clicked edit but decided they don't want to edit the input
-
-                            //***!!! END PSUEDO CODE !!!***/
-
-// The way I tried to do this so far is creating a loop (commented out above in clickEdit function) that will inject an input element (from the editedInputHTML function). I then decided to try injecting 4 input elements instead (from the editedInputHTML function) that appears below the original user input
-
-// I'm not happy with how I approached this so far. I only want a simple solution (such as here https://gist.github.com/asciidisco/ae8afd34b055a1cc8cedce2feb7f86d3). The creator of this code simply used Label elements (no inputs) and changed readOnly from true to false. I would have done this too, but to be honest, the way that code links with the CSS really confuses me, as does a lot of the syntax (because I am sooooo new and got no grammar ;) If my German was as good as my JS, all I'd be able to say would be 'Ich bin ein Berliner').
+}

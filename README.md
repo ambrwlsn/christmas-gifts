@@ -16,7 +16,7 @@ Setup
 
 - Clone the repository to a folder on your local machine.
 - cd into folder
-- run npm-init
+- run npm install
 
 Compile
 ---
