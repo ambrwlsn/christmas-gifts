@@ -58,19 +58,19 @@ function generateGiftDisplayMarkup(gift) {
 
              <div class="gift_item_data">
                <label>Title: </label>
-               <span class="title_span" style="float: right;">${gift.title}</span>
+               <span class="span title_span" style="float: right;">${gift.title}</span>
              </div>
              <div class="gift_item_data">
                <label>Recipient: </label>
-               <span class="recipient_span" style="float: right;">${gift.recipient}</span><br>
+               <span class="span recipient_span" style="float: right;">${gift.recipient}</span><br>
              </div>
              <div class="gift_item_data">
                <label>Link: </label>
-               <span class="link_span" style="float: right;">${gift.link}</span><br>
+               <span class="span link_span" style="float: right;">${gift.link}</span><br>
              </div>
              <div class="gift_item_data">
                <label>Price: </label>
-               <span class="price_span" style="float: right;">${gift.price}</span><br>
+               <span class="span price_span" style="float: right;">${gift.price}</span><br>
              </div>
              <button name="button" class="edit_gift">Edit</button>
          </form>`;
@@ -90,36 +90,39 @@ function clickEdit(giftEvent) {
     var edited_gift = giftSubmitFormUserInput();
     var $gift_item_form = giftEvent.target.parentNode;
     var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
-    var editedInput = editedInputHTML(edited_gift);
+    console.log($input_wrapper);
+    //console.log($input_wrapper.hasChildNodes());
+    //var $form_spans = $input_wrapper.childNodes;
+    
 
-    $gift_item_form.insertAdjacentHTML('beforeend', editedInput);
+    // $gift_item_form.insertAdjacentHTML('beforeend', editedInput);
 
-//     for (var i = 0, length = input_wrapper.length; i < length; i++) {
-//         input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
-//   }
+    for (var i = 0, length = $input_wrapper.length; i < length; i++) {
+            var editedInput = editedInputHTML(edited_gift);
+            // this.removeChild(this.getElementsByClassName('span'));
+            //$input_wrapper[i].removeChild($form_spans);
+            $input_wrapper[i].insertAdjacentHTML('beforeend', editedInput);
+  }
 }
 
 function allowGiftEdit() {
     var $gifts = document.getElementsByClassName("edit_gift");
     var lastItem = $gifts.length - 1;
     $gifts[lastItem].addEventListener("click", clickEdit, false);
-} // a dev at the unit wrote this function. he's nice but talks really fast and I'd didn't full understand what it does
+}
 
 function editedGiftContents() {
     return {
-        title: document.getElementsByClassName("title_span").value,
-        recipient: document.getElementsByClassName("recipient_span").value,
-        link: document.getElementsByClassName("link_span").value,
-        price: document.getElementsByClassName("price_span").value,
+        title: form.getElementsByClassName("title_span").value,
+        recipient: form.getElementsByClassName("recipient_span").value,
+        link: form.getElementsByClassName("link_span").value,
+        price: form.getElementsByClassName("price_span").value,
     };
 }
 
 function editedInputHTML(edited_gift){
   const markup = `
-  <input type="text" class="edit_input_here" value="${edited_gift.title}" />
-  <input type="text" class="edit_input_here" value="${edited_gift.recipient}" />
-  <input type="text" class="edit_input_here" value="${edited_gift.link}" />
-  <input type="text" class="edit_input_here" value="${edited_gift.price}" />`;
+  <input type="text" class="edit_input_here" value="${edited_gift.title}" />`;
   return markup;
 } // I can't figure out what to write in the value attribute here. What is currently there does not work
 
