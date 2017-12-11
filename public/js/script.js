@@ -15,6 +15,7 @@ function emptyInputAlert(){
     var $recValue = document.getElementById("recipient").value;
     if ($titleValue.trim() === '' | $recValue.trim() === '') {
       alert("You must add a gift and recipient!");
+      return true;
     } else {
       false 
     } 
@@ -24,6 +25,7 @@ function checkNumber(){
     var $priceValue = document.getElementById("price").value;
     if ($priceValue != "" | isNaN($priceValue)) {
         alert("Invalid price!");
+        return true;
     }   else {
         false 
       } 
@@ -33,7 +35,12 @@ function insertGiftDisplayMarkup(){
     var $container_element = document.getElementById("gift_list_section"); //targets gift list section (a div container in the HTML file)
     var new_gift = giftSubmitFormUserInput(); //accesses user input in gift submit form and puts it in 'new_gift' variable
     var gift_markup = generateGiftDisplayMarkup(new_gift); //inserts user input (using new_gift variable) into HTML template strings 
-    $container_element.insertAdjacentHTML('beforeend', gift_markup); //targets gift list section, runs insert adjacent HTML function & places the user + HTML template strings into the gift list section
+    if(emptyInputAlert() | checkNumber()) {
+        return false;
+     //targets gift list section, runs insert adjacent HTML function & places the user + HTML template strings into the gift list section
+    } else {
+        $container_element.insertAdjacentHTML('beforeend', gift_markup); 
+      } 
 }
 
 function giftSubmitFormUserInput() {
