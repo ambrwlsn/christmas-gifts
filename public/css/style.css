@@ -1,15 +1,27 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 @font-face {
   font-family: 'Flakes';
   src: url("/fonts/Flakes.ttf") format("truetype"); }
 
+label, input, button, span {
+  font-family: 'Roboto', sans-serif;
+  font-size: .8em; }
+
+label {
+  font-weight: bold; }
+
 h1 {
   text-align: center;
   font-family: 'Flakes', Helvetica, Arial, sans-serif;
-  color: #E91E63; }
+  color: #E91E63;
+  text-decoration: underline; }
 
 h2 {
   font-family: 'Flakes', Helvetica, Arial, sans-serif;
   color: #E91E63; }
+
+.gift_form_heading {
+  margin-bottom: 0; }
 
 .list-title {
   font-size: .8em;
@@ -46,6 +58,11 @@ input {
   border-left: 1px solid black;
   border-bottom: 1.5px dashed #E91E63;
   box-shadow: inset 0 -1px 0 0 #a30416, inset 0 1px 0 0 #a30429, 0 1px 0 0 #a30427, 0 -1px 0 0 #a30439; }
+
+.gift_item {
+  border: 1px solid #ccc;
+  margin-top: 1em;
+  padding: .4em; }
 
 .f {
   float: right; }
