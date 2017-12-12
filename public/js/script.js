@@ -134,17 +134,16 @@ function clickSave(saveEvent) {
                 var $input = $inputs[j];
                 $input.style.display = "none";
                 var $spans = giftItemWrapper.getElementsByClassName('span');
-                for(var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
+                for(var k = 0, $spanLength = $spans.length; k < $spanLength; k++) {
                     var $span = $spans[k];
                 
                 $span.style.display = "block";
                 $span.innerHTML = $input.value;
 
+                // var $save_button = saveEvent.target;
+                // $save_button.style.display = "none";      
                 var $save_button = saveEvent.target;
-                $save_button.style.display = "none";   
-            
-               
-                
+                $save_button.remove();  
             }
            
         }   
