@@ -10,36 +10,26 @@ function addNewGiftToGiftList(event) {
     clearUserInputFields();
 }
 
-function emptyInputAlert(){
+function emptyInputAlert() {
     var $titleValue = document.getElementById("title").value;
     var $recValue = document.getElementById("recipient").value;
     if ($titleValue.trim() === '' | $recValue.trim() === '') {
-      alert("You must add a gift and recipient!");
-      return true;
+        alert("You must add a gift and recipient!");
+        return true;
     } else {
-      return false;  
-    } 
+        return false;
+    }
 }
 
-// function checkNumber(){
-//     var $priceValue = document.getElementById("price").value;
-//     if ($priceValue != "" | isNaN($priceValue)) {
-//         alert("Invalid price!");
-//         return true;
-//     }   else {
-//         return false; 
-//       } 
-// }
-
-function insertGiftInstance(){
-    if(emptyInputAlert()){
+function insertGiftInstance() {
+    if (emptyInputAlert()) {
         return false;
     } else {
         var $container_element = document.getElementById("gift_list_section");
-        var new_gift = giftSubmitFormUserInput(); 
+        var new_gift = giftSubmitFormUserInput();
         var gift_markup = generateGiftInstance(new_gift); //the new_gift variable links to the function below!!!!!!
         $container_element.insertAdjacentHTML('beforeend', gift_markup);
-     } 
+    }
 }
 
 function giftSubmitFormUserInput() {
@@ -91,33 +81,33 @@ function clickEdit(giftEvent) {
     giftEvent.preventDefault();
     var $gift_item_form = giftEvent.target.parentNode;
     var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
-    for (var i = 0, length = $input_wrapper.length; i < length; i++)
-        {var giftItemWrapper = $input_wrapper[i];
+    for (var i = 0, length = $input_wrapper.length; i < length; i++) {
+        var giftItemWrapper = $input_wrapper[i];
         var $inputs = giftItemWrapper.getElementsByClassName('span');
-            for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++)
-                {var $span = $inputs[j];
-                 var $edit_button = giftEvent.target;
-                 $span.style.display = "none";
-                 $edit_button.style.display = "none";
-                }  
-                var $inputs = giftItemWrapper.getElementsByClassName('input');
-                for(var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) 
-                    {var $input = $inputs[k];
-                     $input.style.display = "block";   
-                    }
-        }   
-                var save_button = generateSaveButtonMarkup();
-                $gift_item_form.insertAdjacentHTML('beforeend', save_button); 
-                allowSaveEdit(); 
+        for (var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
+            var $span = $inputs[j];
+            var $edit_button = giftEvent.target;
+            $span.style.display = "none";
+            $edit_button.style.display = "none";
+        }
+        var $inputs = giftItemWrapper.getElementsByClassName('input');
+        for (var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
+            var $input = $inputs[k];
+            $input.style.display = "block";
+        }
+    }
+    var save_button = generateSaveButtonMarkup();
+    $gift_item_form.insertAdjacentHTML('beforeend', save_button);
+    allowSaveEdit();
 }
 
 function allowGiftEdit() {
     var $gifts = document.getElementsByClassName("edit_button");
     var $lastItem = $gifts.length - 1;
     $gifts[$lastItem].addEventListener("click", clickEdit, false);
-} 
+}
 
-function generateSaveButtonMarkup(){
+function generateSaveButtonMarkup() {
     const markup = `
     <button name="button" class="save_button">Save</button>`;
     return markup;
@@ -130,32 +120,24 @@ function clickSave(saveEvent) {
     for (var i = 0, length = $input_wrapper.length; i < length; i++) {
         var giftItemWrapper = $input_wrapper[i];
         var $inputs = giftItemWrapper.getElementsByClassName('input');
-            for(var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
-                var $input = $inputs[j];
-                $input.style.display = "none";
-                var $spans = giftItemWrapper.getElementsByClassName('span');
-                for(var k = 0, $spanLength = $spans.length; k < $spanLength; k++) {
-                    var $span = $spans[k];
-                
+        for (var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
+            var $input = $inputs[j];
+            $input.style.display = "none";
+            var $spans = giftItemWrapper.getElementsByClassName('span');
+            for (var k = 0, $spanLength = $spans.length; k < $spanLength; k++) {
+                var $span = $spans[k];
                 $span.style.display = "block";
                 $span.innerHTML = $input.value;
-
-                // var $save_button = saveEvent.target;
-                // $save_button.style.display = "none";      
                 var $save_button = saveEvent.target;
-                $save_button.remove();  
+                $save_button.remove();
             }
-           
-        }   
-
-        var $edit_button = document.getElementsByTagName("button");
-            for (var l = 0, $inputsLength = $edit_button.length; l < $inputsLength; l++) {
-                var $buttons = $edit_button[l];
-                $buttons.style.display = "inline";
         }
-        
+        var $edit_button = document.getElementsByTagName("button");
+        for (var l = 0, $inputsLength = $edit_button.length; l < $inputsLength; l++) {
+            var $buttons = $edit_button[l];
+            $buttons.style.display = "inline";
+        }
     }
- 
 }
 
 function allowSaveEdit() {
@@ -163,6 +145,3 @@ function allowSaveEdit() {
     var $lastItem = $gifts.length - 1;
     $gifts[$lastItem].addEventListener("click", clickSave, false);
 }
-
-
-
