@@ -93,7 +93,7 @@ function clickEdit(giftEvent) {
         var $inputs = giftItemWrapper.getElementsByClassName('input');
         for (var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
             var $input = $inputs[k];
-            $input.style.display = "block";
+            $input.style.display = "inline";
         }
     }
     var save_button = generateSaveButtonMarkup();

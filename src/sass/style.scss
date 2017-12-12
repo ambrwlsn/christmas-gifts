@@ -1,5 +1,17 @@
+@font-face {
+  font-family: 'Flakes';
+  src: url('/fonts/Flakes.ttf') format('truetype');
+  }
+
 h1 {
-  text-align: center; 
+  text-align: center;
+  font-family: 'Flakes', Helvetica, Arial, sans-serif; 
+  color: #E91E63;
+}
+
+h2 {
+  font-family: 'Flakes', Helvetica, Arial, sans-serif; 
+  color: #E91E63;
 }
 
 .list-title {
@@ -18,7 +30,6 @@ input {
 }
 
 .gift-form {
-  border: 1px solid black;
   margin: 2em;
   padding: 2em;
   display: flex;
@@ -28,7 +39,7 @@ input {
 }
 
 .list-box {
-  border: 1px solid black;
+  margin-bottom: 1px;
   margin: 2em;
   padding: 2em;
   display: flex;
@@ -36,6 +47,13 @@ input {
   width: 20vw;
   height: 50vh;
   overflow: scroll;
+}
+
+.gift-form, .list-box {
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1.5px dashed #E91E63;
+  box-shadow: inset 0 -1px 0 0 #a30416, inset 0 1px 0 0 #a30429, 0 1px 0 0 #a30427, 0 -1px 0 0 #a30439;
 }
 
 .f {
