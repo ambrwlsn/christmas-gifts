@@ -24,6 +24,7 @@ h1 {
 h2 {
   font-family: 'Flakes', Helvetica, Arial, sans-serif; 
   color: #E91E63;
+  margin-bottom: 0;
 }
 
 .gift_form_heading {
@@ -40,9 +41,21 @@ input {
   margin-bottom:1em;
 }
 
+.gift-form input {
+  margin-bottom: 0em;
+}
+
+.submit_button {
+  margin-top: 1em;
+}
+
 .box-wrap {
   display: flex;
   flex-direction: row;
+}
+
+.user_input_label {
+  margin-top: 1em;
 }
 
 .gift-form {

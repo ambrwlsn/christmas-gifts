@@ -3,34 +3,50 @@ form.addEventListener("submit", addNewGiftToGiftList, false);
 
 function addNewGiftToGiftList(event) {
     event.preventDefault();
-    emptyInputAlert();
     insertGiftInstance();
     allowGiftEdit();
     clearUserInputFields();
 }
 
 function emptyInputAlert() {
-    var $titleValue = document.getElementById("title").value;
-    var $recValue = document.getElementById("recipient").value;
-    if ($titleValue.trim() === '' | $recValue.trim() === '') {
-        alert("You must add a gift and recipient!");
+    var $title = document.getElementById('title');
+    var $recipient = document.getElementById('recipient');
+    var titleValue = $title.value;
+    var recValue = $recipient.value;
+    var empty_alert = '<span class="empty_span" style="color:red">Input required</span>';    
+
+    if (titleValue.trim() === '' | recValue.trim() === '') {  
+        // check if the error is already displayed
+        if (document.querySelectorAll('.empty_span').length <= 0) {
+            $title.insertAdjacentHTML('afterend', empty_alert);
+            $recipient.insertAdjacentHTML('afterend', empty_alert);
+            $title.style.border = '1px solid red';
+            $recipient.style.border = '1px solid red';
+        }
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
+
 
 function insertGiftInstance() {
     if (emptyInputAlert()) {
         return false;
     } else {
+        
         var $container_element = document.getElementById("gift_list_section");
-        var new_gift = giftSubmitFormUserInput();
+
 
         //the new_gift variable links to the function below!!!!!!
-        var gift_markup = generateGiftInstance(new_gift);
+        var new_gift = giftSubmitFormUserInput();
 
+
+        var gift_markup = generateGiftInstance(new_gift);
+        
+        giftNumber();
         $container_element.insertAdjacentHTML('beforeend', gift_markup);
+        
+    
     }
 }
 
@@ -41,6 +57,11 @@ function giftSubmitFormUserInput() {
         link: document.getElementById("link").value,
         price: document.getElementById("price").value,
     };
+}
+
+function giftNumber(){
+        var number = 1;
+        number++;
 }
 
 function buttons() {
@@ -81,6 +102,7 @@ function generateGiftInstance(gift) {
              <button name="button" class="button save_button" style="display:none">Save</button>
              <button name="button" class="button cancel_button" style="display:none">Cancel</button>
          </form>`;
+         
     return $markup;
 }
 
@@ -97,81 +119,60 @@ function allowGiftEdit() {
     $gifts[$lastItem].addEventListener("click", clickEdit, false);
 }
 
+function allowSaveEdit() {
+    var $gifts = document.getElementsByClassName("save_button");
+    var $lastItem = $gifts.length - 1;
+    $gifts[$lastItem].addEventListener("click", clickSave, false);
+}
+
+function allowCancelEdit() {
+    var $gifts = document.getElementsByClassName("cancel_button");
+    var $lastItem = $gifts.length - 1;
+    $gifts[$lastItem].addEventListener("click", clickCancel, false);
+}
+
 function clickEdit(giftEvent) {
     giftEvent.preventDefault();
-    var $gift_item_forms = giftEvent.target.parentNode;
-    console.log(giftEvent);
-    // var $gift_item_forms = document.querySelector(".button");
-    var $input_wrappers = $gift_item_forms.querySelectorAll(".gift_item_data");
-  
-    $input_wrappers.forEach(($input_wrapper) => {
-        var $span = $input_wrapper.querySelector('span');
-        $span.style.display = "none";
-    });
+    giftEvent.target.style.display = "none";
+    console.log(giftEvent.target);
 
-    giftEvent.srcElement.style.display = "none";
-    
+    // Get the gift wrapper div
+    var $gift_item = giftEvent.target.parentNode;
+    console.log($gift_item.childNodes);
+    // $gift_item.querySelectorAll('.span').display.none;
 
-    // for (var i = 0, length = $input_wrapper.length; i < length; i++) {
-    //     var giftItemWrapper = $input_wrapper[i];
-    //     var $inputs = giftItemWrapper.getElementsByClassName('span');
+    // Pick out the required elements
+    let $save_button = $gift_item.querySelector('.save_button');
+    let $cancel_button = $gift_item.querySelector('.cancel_button');
 
-    //     for (var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
-    //         var $span = $inputs[j];
-    //         var $edit_button = giftEvent.target;
-    //         $span.style.display = "none";
-    //         $edit_button.style.display = "none";
-    //     }
+    let $spans = $gift_item.querySelectorAll('.span');
+    let $inputs = $gift_item.querySelectorAll('.input');
 
-        // var $inputs = giftItemWrapper.getElementsByClassName('input');
-        // for (var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
-        //     var $input = $inputs[k];
-        //     $input.style.display = "inline";
-        // }
-        // displayInline($cancel_button);
-        // displayInline($cancel_button);
-    
-    }
+    // Show the input fields and buttons for edit mode
+    displayInline($inputs);
+    displayInline([$save_button, $cancel_button]);
+    displayNone($spans);
+}
 
-// function inlineButtons(){
-//     var name = clickEdit(name);
-// }
-
-function displayInline(className) {
-    document.getElementsByClassName(className).forEach(($button) => { 
-        $button.style.display = "inline";
+/*
+ * Takes either a single .class_name or an array of ['.class_names', '.like_this']
+ */
+function displayInline(collection) {
+    collection.forEach(($item) => { 
+        if ($item.isArray) {
+            displayInline($item);     
+        }
+        else {
+         $item.style.display = "inline";
+        }
     });
 }
 
-function displayNone(classname) {
-    document.getElementsByClassName(className).forEach(($button) => {
-        $button.style.display = "inline";
+function displayNone(collection) {
+    collection.forEach(($item) => { 
+        $item.style.display = "none";
     });
 }
-
-// function editButtonDisplayInline(){
-//     var $edit_buttons = document.getElementsByClassName('edit_button');
-//     for (var i = 0, edit_buttonsLength = $edit_buttons.length; i < edit_buttonsLength; i++) {
-//         var $edit_button = $edit_buttons[i];
-//         $edit_button.style.display = "inline";
-//     }
-// }
-
-// function saveButtonDisplayInline(){
-//     var $save_buttons = document.getElementsByClassName('save_button');
-//     for (var i = 0, save_buttonsLength = $save_buttons.length; i < save_buttonsLength; i++) {
-//         var $save_button = $save_buttons[i];
-//         $save_button.style.display = "inline";
-//     }
-// }
-
-// function cancelButtonDisplayInline(){
-//     var $cancel_buttons = document.getElementsByClassName('cancel_button');
-//     for (var i = 0, cancel_buttonsLength = $cancel_buttons.length; i < cancel_buttonsLength; i++) {
-//         var $cancel_button = $cancel_buttons[i];
-//         $cancel_button.style.display = "inline";
-//     }
-// }
 
 function clickCancel(cancelEvent) {
     cancelEvent.preventDefault();
@@ -217,25 +218,3 @@ function clickSave(saveEvent) {
         editButtonDisplayInline()
     }
 }
-
-
-
-
-
-function allowSaveEdit() {
-    var $gifts = document.getElementsByClassName("save_button");
-    var $lastItem = $gifts.length - 1;
-    $gifts[$lastItem].addEventListener("click", clickSave, false);
-}
-
-function allowCancelEdit() {
-    var $gifts = document.getElementsByClassName("cancel_button");
-    var $lastItem = $gifts.length - 1;
-    $gifts[$lastItem].addEventListener("click", clickCancel, false);
-}
-
-// var $edit_button = document.getElementsByTagName("button");
-        // for (var l = 0, $inputsLength = $edit_button.length; l < $inputsLength; l++) {
-        //     var $buttons = $edit_button[l];
-        //     $buttons.style.display = "inline";
-        // }
