@@ -5,6 +5,8 @@ function addNewGiftToGiftList(event) {
     event.preventDefault();
     insertGiftInstance();
     allowGiftEdit();
+    allowSaveEdit();
+    allowCancelEdit();
     clearUserInputFields();
 }
 
@@ -15,8 +17,7 @@ function emptyInputAlert() {
     var recValue = $recipient.value;
     var empty_alert = '<span class="empty_span" style="color:red">Input required</span>';    
 
-    if (titleValue.trim() === '' | recValue.trim() === '') {  
-        // check if the error is already displayed
+    if (titleValue.trim() === '' | recValue.trim() === '') { 
         if (document.querySelectorAll('.empty_span').length <= 0) {
             $title.insertAdjacentHTML('afterend', empty_alert);
             $recipient.insertAdjacentHTML('afterend', empty_alert);
@@ -26,27 +27,33 @@ function emptyInputAlert() {
         return true;
     }
     return false;
+}  
+
+function validatePrice() {
+    var $price = document.getElementById('price');
+    var priceValue = $price.value; 
+    var regex = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
+    var invalidMessageNotDisplayed = document.querySelectorAll('.invalid_price_span').length <= 0;
+    var isValid = regex.test(priceValue);
+    if (!isValid && invalidMessageNotDisplayed) {
+        showInvalidPriceMessage($price);
+    }
+    return isValid;
 }
 
+function showInvalidPriceMessage($priceInput) {
+    var empty_alert = '<span class="invalid_price_span" style="color:red">Please use 00.00 format</span>';     
+    $priceInput.insertAdjacentHTML('afterend', empty_alert);
+    $priceInput.style.border = '1px solid red';
+} 
 
 function insertGiftInstance() {
-    if (emptyInputAlert()) {
-        return false;
+    if (emptyInputAlert()||document.getElementById('price'.value) == "") {
     } else {
-        
         var $container_element = document.getElementById("gift_list_section");
-
-
-        //the new_gift variable links to the function below!!!!!!
         var new_gift = giftSubmitFormUserInput();
-
-
         var gift_markup = generateGiftInstance(new_gift);
-        
-        giftNumber();
         $container_element.insertAdjacentHTML('beforeend', gift_markup);
-        
-    
     }
 }
 
@@ -59,25 +66,9 @@ function giftSubmitFormUserInput() {
     };
 }
 
-function giftNumber(){
-        var number = 1;
-        number++;
-}
-
-function buttons() {
-    return
-        for (var i = 0, $buttonsLength = $buttons.length; i < $buttonsLength; i++) {
-            var $button = $buttons[i];
-            var $edit_button = $buttons[i].querySelector("edit_button");
-            var $cancel_button = $buttons[i].querySelector("cancel_button");
-            var $save_button = $buttons[i].querySelector("save_button");
-        };
-    }
-
 function generateGiftInstance(gift) {
     const $markup = `
           <form class="gift_item">
-
              <div class="gift_item_data">
                <label>Title: </label>
                <span class="span" style="float: right;">${gift.title}</span>
@@ -101,10 +92,11 @@ function generateGiftInstance(gift) {
              <button name="button" class="button edit_button">Edit</button>
              <button name="button" class="button save_button" style="display:none">Save</button>
              <button name="button" class="button cancel_button" style="display:none">Cancel</button>
+             <span class="delete_button">x</span>
          </form>`;
-         
     return $markup;
 }
+
 
 function clearUserInputFields() {
     document.getElementById("title").value = "";
@@ -131,90 +123,100 @@ function allowCancelEdit() {
     $gifts[$lastItem].addEventListener("click", clickCancel, false);
 }
 
+function displayInline($elements) {
+    for (var i = 0, className = $elements.length; i < className; i++) {
+        var classy = $elements[i];
+        classy.style.display = "inline";
+     }
+}
+
+function displayNone($elements) {
+    for (var i = 0, className = $elements.length; i < className; i++) {
+        var classy = $elements[i];
+        classy.style.display = "none";
+     }
+}
+
 function clickEdit(giftEvent) {
     giftEvent.preventDefault();
-    giftEvent.target.style.display = "none";
-    console.log(giftEvent.target);
 
     // Get the gift wrapper div
     var $gift_item = giftEvent.target.parentNode;
-    console.log($gift_item.childNodes);
-    // $gift_item.querySelectorAll('.span').display.none;
 
     // Pick out the required elements
-    let $save_button = $gift_item.querySelector('.save_button');
-    let $cancel_button = $gift_item.querySelector('.cancel_button');
+    let $save_button = $gift_item.querySelectorAll('.save_button');
+    let $edit_button = $gift_item.querySelectorAll('.edit_button');
+    let $cancel_button = $gift_item.querySelectorAll('.cancel_button');
 
     let $spans = $gift_item.querySelectorAll('.span');
     let $inputs = $gift_item.querySelectorAll('.input');
 
     // Show the input fields and buttons for edit mode
     displayInline($inputs);
-    displayInline([$save_button, $cancel_button]);
+    displayInline($save_button);
+    displayInline($cancel_button);
+    displayNone($edit_button);
     displayNone($spans);
-}
-
-/*
- * Takes either a single .class_name or an array of ['.class_names', '.like_this']
- */
-function displayInline(collection) {
-    collection.forEach(($item) => { 
-        if ($item.isArray) {
-            displayInline($item);     
-        }
-        else {
-         $item.style.display = "inline";
-        }
-    });
-}
-
-function displayNone(collection) {
-    collection.forEach(($item) => { 
-        $item.style.display = "none";
-    });
 }
 
 function clickCancel(cancelEvent) {
     cancelEvent.preventDefault();
-    var $gift_item_form = cancelEvent.target.parentNode;
-    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
-    for (var i = 0, length = $input_wrapper.length; i < length; i++) {
-        var giftItemWrapper = $input_wrapper[i];
-        var $inputs = giftItemWrapper.getElementsByClassName('span');
-        for (var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
-            var $span = $inputs[j];
-            $span.style.display = "inline";
-        }
-        var $inputs = giftItemWrapper.getElementsByClassName('input');
-        for (var k = 0, $inputsLength = $inputs.length; k < $inputsLength; k++) {
-            var $input = $inputs[k];
-            $input.remove();
-            var $cancel_button = cancelEvent.target;
-            // $edit_button.style.display = "none";
-            $cancel_button.remove();
-        }
-    }
+    var $gift_item = cancelEvent.target.parentNode;
+
+    let $save_button = $gift_item.querySelectorAll('.save_button');
+    let $edit_button = $gift_item.querySelectorAll('.edit_button');
+    let $cancel_button = $gift_item.querySelectorAll('.cancel_button');
+
+    let $spans = $gift_item.querySelectorAll('.span');
+    let $inputs = $gift_item.querySelectorAll('.input');
+    displayInline($edit_button);
+    displayInline($spans);
+    displayNone($save_button);
+    displayNone($cancel_button);
+    displayNone($inputs);
 }
 
 function clickSave(saveEvent) {
     saveEvent.preventDefault();
-    var $gift_item_form = saveEvent.target.parentNode;
-    var $input_wrapper = $gift_item_form.getElementsByClassName("gift_item_data");
+    var $gift_item = saveEvent.target.parentNode;
+
+    let $save_button = $gift_item.querySelectorAll('.save_button');
+    let $edit_button = $gift_item.querySelectorAll('.edit_button');
+    let $cancel_button = $gift_item.querySelectorAll('.cancel_button');
+
+    let $spans = $gift_item.querySelectorAll('.span');
+    let $inputs = $gift_item.querySelectorAll('.input');
+
+    // using below code caused only the 'price' value to be entered as new values in the spans, but I have no idea why
+
+    // for (var i = 0, spanLength = $spans.length; i < spanLength; i++) {
+    //     var span = $spans[i];
+    //     for(var j = 0, inputsLength = $inputs.length; j < inputsLength; j++) {
+    //         var input = $inputs[j];
+    //         span.innerHTML = input.value;
+    //     }
+    // }
+
+    var $input_wrapper = $gift_item.getElementsByClassName("gift_item_data");
     for (var i = 0, length = $input_wrapper.length; i < length; i++) {
         var giftItemWrapper = $input_wrapper[i];
-        var $inputs = giftItemWrapper.getElementsByClassName('input');
-        for (var j = 0, $inputsLength = $inputs.length; j < $inputsLength; j++) {
-            var $input = $inputs[j];
-            $input.style.display = "none";
-            var $spans = giftItemWrapper.getElementsByClassName('span');
-            for (var k = 0, $spanLength = $spans.length; k < $spanLength; k++) {
-                var $span = $spans[k];
-                $span.style.display = "block";
-                $span.innerHTML = $input.value;
-                var $save_button = saveEvent.target;
-                $save_button.remove();
+        var $input_elements = giftItemWrapper.getElementsByClassName('input');
+            for(var j = 0, $input_elementsLength = $input_elements.length; j < $input_elementsLength; j++) {
+                var $input_element = $input_elements[j];
+
+                var $span_elements = giftItemWrapper.getElementsByClassName('span');
+                for(var k = 0, $span_elementsLength = $span_elements.length; k < $span_elementsLength; k++) {
+                    var $span_element = $span_elements[k];
+                $span_element.innerHTML = $input_element.value;
+
             }
         }
-        editButtonDisplayInline()
     }
+
+    displayInline($edit_button);
+    displayInline($spans);
+    displayNone($save_button);
+    displayNone($cancel_button);
+    displayNone($inputs);  
+
 }

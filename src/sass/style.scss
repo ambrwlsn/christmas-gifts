@@ -41,6 +41,14 @@ input {
   margin-bottom:1em;
 }
 
+.delete_button {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  margin: 0;
+  padding: 0;
+}
+
 .gift-form input {
   margin-bottom: 0em;
 }
