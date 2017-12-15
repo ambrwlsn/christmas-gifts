@@ -33,7 +33,7 @@ gulp.task("fonts", function() {
 
 gulp.task("js", function() {
   return gulp
-    .src("./src/js/*.js")
+    .src("./src/js/**/*.js")
     .pipe(gulp.dest("./public/js"))
     .pipe(browserSync.stream());
 });
