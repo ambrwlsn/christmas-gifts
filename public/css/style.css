@@ -36,8 +36,8 @@ input {
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-end;
-  margin: 0;
-  padding: 0; }
+  color: #E91E63;
+  font-weight: bold; }
 
 .gift-form input {
   margin-bottom: 0em; }

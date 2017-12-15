@@ -4,9 +4,10 @@ form.addEventListener("submit", addNewGiftToGiftList, false);
 function addNewGiftToGiftList(event) {
     event.preventDefault();
     insertGiftInstance();
-    allowGiftEdit();
+    allowGiftEdit(); // why do I have to put the 4 allows here?
     allowSaveEdit();
     allowCancelEdit();
+    allowDeleteGiftItem()
     clearUserInputFields();
 }
 
@@ -92,7 +93,7 @@ function generateGiftInstance(gift) {
              <button name="button" class="button edit_button">Edit</button>
              <button name="button" class="button save_button" style="display:none">Save</button>
              <button name="button" class="button cancel_button" style="display:none">Cancel</button>
-             <span class="delete_button">x</span>
+             <button name="button" class="button delete_button" style="display:inline">x</button>
          </form>`;
     return $markup;
 }
@@ -123,6 +124,12 @@ function allowCancelEdit() {
     $gifts[$lastItem].addEventListener("click", clickCancel, false);
 }
 
+function allowDeleteGiftItem() {
+    var $gifts = document.getElementsByClassName("delete_button");
+    var $lastItem = $gifts.length - 1;
+    $gifts[$lastItem].addEventListener("click", clickDelete, false);
+}
+
 function displayInline($elements) {
     for (var i = 0, className = $elements.length; i < className; i++) {
         var classy = $elements[i];
@@ -135,6 +142,12 @@ function displayNone($elements) {
         var classy = $elements[i];
         classy.style.display = "none";
      }
+}
+
+function clickDelete(deleteGiftItem){
+    deleteGiftItem.preventDefault();
+    var $gift_item = deleteGiftItem.target.parentNode;
+    $gift_item.remove();
 }
 
 function clickEdit(giftEvent) {
