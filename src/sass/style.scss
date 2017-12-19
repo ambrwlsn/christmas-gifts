@@ -5,6 +5,20 @@
 
   @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+[draggable=true] {
+  -khtml-user-drag: element;
+}
+
 label, input, button, span {
   font-family: 'Roboto', sans-serif;
   font-size: .8em;
@@ -97,6 +111,14 @@ input {
   border: 1px solid #ccc;
   margin-top: 1em;
   padding: .4em;
+}
+
+.gift_item.dragElement {
+  opacity: 0.4;
+}
+
+.gift_item.over {
+  border: 2px solid #E91E63;
 }
 
 .f {

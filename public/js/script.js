@@ -69,7 +69,7 @@ function giftSubmitFormUserInput() {
 
 function generateGiftInstance(gift) {
     const $markup = `
-          <form class="gift_item">
+          <form class="gift_item" draggable="true" ondragstart="handleDragStart(event);">
              <div class="gift_item_data">
                <label>Title: </label>
                <span class="span" style="float: right;">${gift.title}</span>

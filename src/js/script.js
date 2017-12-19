@@ -14,25 +14,43 @@ function addNewGiftToGiftList(event) {
 function emptyInputAlert() {
     var $title = document.getElementById('title');
     var $recipient = document.getElementById('recipient');
-    var titleValue = $title.value;
-    var recValue = $recipient.value;
-    var empty_alert = '<span class="empty_span" style="color:red">Input required</span>';    
+    var empty_title_markup = '<span id="empty_title_span" style="color:red">Input required</span>';
+    var empty_recipient_markup = '<span id="empty_recipient_span" style="color:red">Input required</span>';
 
-    if (titleValue.trim() === '' | recValue.trim() === '') { 
-        if (document.querySelectorAll('.empty_span').length <= 0) {
-            $title.insertAdjacentHTML('afterend', empty_alert);
-            $recipient.insertAdjacentHTML('afterend', empty_alert);
-            $title.style.border = '1px solid red';
-            $recipient.style.border = '1px solid red';
-        }
-        return true;
+    if (!isTitleValid() && !document.getElementById('empty_title_span')) {
+        insertAlert($title, empty_title_markup);
     }
-    return false;
-}  
+    if (!isRecipientValid() && !document.getElementById('empty_recipient_span')) {
+        insertAlert($recipient, empty_recipient_markup);
+    }
+}
+
+function isTitleValid() {
+    var $title = document.getElementById('title');
+    var titleValue = $title.value;
+    if (titleValue.trim() === '') {
+        return false;
+    } 
+    return true;
+}
+
+function isRecipientValid() {
+    var $recipient = document.getElementById('recipient');
+    var recValue = $recipient.value;
+    if (recValue.trim() === '') {
+        return false;
+    } 
+    return true;
+}
+
+function insertAlert(element, markup) {
+    element.insertAdjacentHTML('afterend', markup);
+    element.style.border = '1px solid red';
+}
 
 function validatePrice() {
     var $price = document.getElementById('price');
-    var priceValue = $price.value; 
+    var priceValue = $price.value;
     var regex = /^[1-9]\d*(((,\d{3}){1})?(\.\d{0,2})?)$/;
     var invalidMessageNotDisplayed = document.querySelectorAll('.invalid_price_span').length <= 0;
     var isValid = regex.test(priceValue);
@@ -43,13 +61,16 @@ function validatePrice() {
 }
 
 function showInvalidPriceMessage($priceInput) {
-    var empty_alert = '<span class="invalid_price_span" style="color:red">Please use 00.00 format</span>';     
+    var empty_alert = '<span class="invalid_price_span" style="color:red">Please use 00.00 format</span>';
     $priceInput.insertAdjacentHTML('afterend', empty_alert);
     $priceInput.style.border = '1px solid red';
-} 
+}
 
 function insertGiftInstance() {
-    if (emptyInputAlert()||document.getElementById('price'.value) == "") {
+    emptyInputAlert();
+    
+    var price_value = document.getElementById('price').value == "";
+    if (isTitleValid() || isRecipientValid() || price_value) {
     } else {
         var $container_element = document.getElementById("gift_list_section");
         var new_gift = giftSubmitFormUserInput();
@@ -69,7 +90,7 @@ function giftSubmitFormUserInput() {
 
 function generateGiftInstance(gift) {
     const $markup = `
-          <form class="gift_item">
+          <form class="gift_item" draggable="true" ondragstart="handleDragStart(event);">
              <div class="gift_item_data">
                <label>Title: </label>
                <span class="span" style="float: right;">${gift.title}</span>
@@ -134,17 +155,17 @@ function displayInline($elements) {
     for (var i = 0, className = $elements.length; i < className; i++) {
         var classy = $elements[i];
         classy.style.display = "inline";
-     }
+    }
 }
 
 function displayNone($elements) {
     for (var i = 0, className = $elements.length; i < className; i++) {
         var classy = $elements[i];
         classy.style.display = "none";
-     }
+    }
 }
 
-function clickDelete(deleteGiftItem){
+function clickDelete(deleteGiftItem) {
     deleteGiftItem.preventDefault();
     var $gift_item = deleteGiftItem.target.parentNode;
     $gift_item.remove();
@@ -214,12 +235,12 @@ function clickSave(saveEvent) {
     for (var i = 0, length = $input_wrapper.length; i < length; i++) {
         var giftItemWrapper = $input_wrapper[i];
         var $input_elements = giftItemWrapper.getElementsByClassName('input');
-            for(var j = 0, $input_elementsLength = $input_elements.length; j < $input_elementsLength; j++) {
-                var $input_element = $input_elements[j];
+        for (var j = 0, $input_elementsLength = $input_elements.length; j < $input_elementsLength; j++) {
+            var $input_element = $input_elements[j];
 
-                var $span_elements = giftItemWrapper.getElementsByClassName('span');
-                for(var k = 0, $span_elementsLength = $span_elements.length; k < $span_elementsLength; k++) {
-                    var $span_element = $span_elements[k];
+            var $span_elements = giftItemWrapper.getElementsByClassName('span');
+            for (var k = 0, $span_elementsLength = $span_elements.length; k < $span_elementsLength; k++) {
+                var $span_element = $span_elements[k];
                 $span_element.innerHTML = $input_element.value;
 
             }
@@ -230,6 +251,6 @@ function clickSave(saveEvent) {
     displayInline($spans);
     displayNone($save_button);
     displayNone($cancel_button);
-    displayNone($inputs);  
+    displayNone($inputs);
 
 }
