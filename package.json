@@ -1,14 +1,14 @@
 {
   "name": "christmas-gifts",
-  "version": "1.0.0",
-  "description": "Christmas gift app",
+  "version": "1.0.1",
+  "description": "An app where items can be added to a Christmas gift list.",
   "main": "gulpfile.js",
   "dependencies": {
-    "browser-sync": "^2.18.13",
-    "gulp": "^3.9.1"
+    "browser-sync": "^2.26.12",
+    "gulp": "^4.0.2"
   },
   "devDependencies": {
-    "gulp-sass": "^3.1.0"
+    "gulp-sass": "^4.1.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,14 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/ambrwlsn/christmas-gifts.git"
   },
-  "keywords": [
-    "christmas",
-    "gift",
-    "app",
-    "gifts"
-  ],
-  "author": "AW",
-  "license": "ISC",
+  "keywords": ["christmas", "gift", "app", "gifts"],
+  "author": "Amber Wilson",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ambrwlsn/christmas-gifts/issues"
   },
